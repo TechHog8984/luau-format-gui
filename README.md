@@ -2,6 +2,8 @@
 
 Graphical User Interface for [luau-format](https://github.com/TechHog8984/luau-format)
 
+![](showcase.png)
+
 ## Obtaining
 
 Either download the latest of the [github releases](https://github.com/TechHog8984/luau-format-gui/releases) or compile yourself with cargo.
@@ -16,11 +18,11 @@ If it doesn't exist, it will then attempt to download the applicable binary for 
 <br>
 If the above request fails (or if any other error occurs while locating/fetching the binary), an error will appear in stdout and the program will crash. This means that if you didn't run the application via the command line, you may be quite confused. Sorry!
 <br>
-* Press `Open file...` to open a file dialog and choose input location. Upon valid selection, luau-format will try to format the code. If it succeeds, you will see the formatted output in the code editor below. Otherwise, you will see an error below the code editor.
+* Press `Open file...` to open a file dialog and choose input location. Upon a valid selection, luau-format will try to format the code. If it succeeds, you will see the formatted output in the code editor below. Otherwise, you will see an error below the code editor.
 * Press `Save to file...` to open a file dialog and choose output location. Whatever is inside of the code editor will get saved to the given location. Any errors encountered will appear below the code editor.
 * Press `Reset editor...` to revert the editor contents back to the original formatted output.
 <br>
-When modifying any of the available options, luau-format will be rerun, <b>ignoring any changes made in the code editor!</b>
+* When modifying any of the available options, luau-format will be rerun, <b>ignoring any changes made in the code editor!</b>
 
 ## Contributing
 
