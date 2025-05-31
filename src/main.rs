@@ -5,6 +5,7 @@ use std::process::Command;
 use std::sync::{Arc, Mutex};
 use std::{env, fs, thread};
 
+use dirs;
 use eframe::egui;
 use egui_code_editor::{CodeEditor, ColorTheme, Syntax};
 
@@ -15,7 +16,7 @@ async fn main() -> eframe::Result {
         ..Default::default()
     };
 
-    let home = env::var("HOME").expect("failed to get HOME environment variable");
+    let home = dirs::home_dir().expect("failed to get home directory");
     let mut binary_path = "luau-format".to_string();
 
     let cmd = Command::new("luau-format").output();
@@ -30,7 +31,7 @@ async fn main() -> eframe::Result {
                 env::consts::ARCH
             ).to_string()
         };
-        let mut path = format!("{}/.luau-format-gui", home);
+        let mut path = format!("{}/.luau-format-gui", home.display());
         if !fs::exists(path.clone()).expect(format!("failed to stat {}", path).as_str()) {
             fs::create_dir(path.clone()).expect(format!("failed to create dir {}", path).as_str());
         }
@@ -51,6 +52,16 @@ async fn main() -> eframe::Result {
         fs::write(path.clone(), body)
             .expect(format!("failed to write to {}", path.clone()).as_str());
         println!("successfully downloaded luau-format from latest github release.");
+        if !cfg!(windows) {
+            println!("giving executable permission to luau-format...");
+            if let Err(err) = Command::new("chmod").arg("+x").arg(path.clone()).output() {
+                panic!(
+                    "failed to give executable permissions to luau-format: {}",
+                    err
+                );
+            }
+            println!("done!");
+        }
         binary_path = path;
     }
     eframe::run_native(
